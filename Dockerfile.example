@@ -1,0 +1,16 @@
+# Dockerfile.example - образ с примерами данных покрытия для демонстрации
+# Перед сборкой убедитесь, что выполнена цель make build-example
+FROM jacoco-aggregator:latest
+
+WORKDIR /app
+
+# Копируем предварительно собранные отчёты JaCoCo из example
+COPY example/things/build/service/target/site/jacoco-report/ ./data/example/service/
+COPY example/things/build/stub/target/site/jacoco-report/ ./data/example/stub/
+
+# Создаём конфигурационный файл-пример
+COPY config.example.yaml ./config.yaml
+
+EXPOSE 8080
+
+CMD [ "--config", "/app/config.yaml"]

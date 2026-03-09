@@ -1,0 +1,40 @@
+# Пример конфигурации JaCoCo Coverage Aggregator
+# Используется для демонстрации с example/things
+
+services:
+  - id: things-service
+    name: "Things Service"
+    # Шаблон URL для загрузки исходников (опционально)
+    sources_url_pattern: "http://repo.example.com/things/{{service}}/{{version}}/sources.jar"
+    versions:
+      - version: "1.0.0"
+        # Пути к исходникам и class-файлам для этой версии
+        source_path: /app/data/example/service
+        class_path: /app/data/example/service
+      - version: "1.1.0"
+        source_path: /app/data/example/service
+        class_path: /app/data/example/service
+    # Инстансы (версия может быть указана явно или определена автоматически)
+    instances:
+      - host: localhost
+        port: 8081
+        version: "1.0.0"   # если не указана – будет определена через /version эндпоинт
+      - host: localhost
+        port: 8082
+        # version не указана – будет запрошена у инстанса
+    poll_interval: 60s
+    version_detection:
+      enabled: true
+      endpoint: "/version"   # HTTP‑путь, возвращающий версию в plain text
+      timeout: 5s
+
+  - id: things-stub
+    name: "Things Stub"
+    versions:
+      - version: "1.0.0"
+        source_path: /app/data/example/stub
+        class_path: /app/data/example/stub
+    instances:
+      - host: localhost
+        port: 8083
+    poll_interval: 30s

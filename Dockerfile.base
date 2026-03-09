@@ -1,0 +1,40 @@
+# Dockerfile.base - базовый образ для JaCoCo Coverage Aggregator
+# Содержит Java runtime, jacococli и собранный бинарник агрегатора (с embedded фронтендом).
+
+# Этап 1: Сборка Go-приложения (включая frontend через embed)
+FROM golang:1.26-alpine AS builder
+
+WORKDIR /app
+
+# Установка Node.js, npm и make для сборки frontend
+RUN apk add --no-cache nodejs npm make
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+# Сборка frontend и бинарника (Makefile делает npm ci, npm run build, копирует в embed директорию)
+RUN make build
+
+# Этап 2: Java runtime + JaCoCo CLI (Alpine)
+FROM alpine:3.21 AS jacoco
+
+RUN apk add --no-cache curl unzip
+
+RUN curl -L -o /tmp/jacoco.zip \
+    https://github.com/jacoco/jacoco/releases/download/v0.8.14/jacoco-0.8.14.zip && \
+    unzip -j /tmp/jacoco.zip "lib/jacococli.jar" -d / && \
+    rm /tmp/jacoco.zip
+
+# Этап 3: Финальный образ (Alpine)
+FROM alpine:3.21 
+
+RUN apk add --no-cache openjdk17-jre
+
+COPY --from=jacoco /jacococli.jar /usr/local/lib/jacococli.jar
+COPY --from=builder /app/bin/aggregator /usr/local/bin/aggregator
+
+WORKDIR /app
+
+ENTRYPOINT ["/usr/local/bin/aggregator"]

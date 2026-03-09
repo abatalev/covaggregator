@@ -1,0 +1,43 @@
+{
+  "status": [
+    {
+      "service": "service-a",
+      "version": "1.0.0",
+      "hasSources": true,
+      "hasClasses": true,
+      "hasUnitCoverage": true,
+      "unitReportUrl": "/reports/service-a/1.0.0/unit/",
+      "hasRuntimeCoverage": false,
+      "runtimeReportUrl": null,
+      "hasFullCoverage": true,
+      "fullReportUrl": "/reports/service-a/1.0.0/full/",
+      "lastUpdated": "2026-03-10T07:30:00Z"
+    },
+    {
+      "service": "service-a",
+      "version": "1.1.0",
+      "hasSources": true,
+      "hasClasses": true,
+      "hasUnitCoverage": true,
+      "unitReportUrl": "/reports/service-a/1.1.0/unit/",
+      "hasRuntimeCoverage": true,
+      "runtimeReportUrl": "/reports/service-a/1.1.0/runtime/",
+      "hasFullCoverage": true,
+      "fullReportUrl": "/reports/service-a/1.1.0/full/",
+      "lastUpdated": "2026-03-10T08:15:00Z"
+    },
+    {
+      "service": "service-b",
+      "version": "2.0.0",
+      "hasSources": true,
+      "hasClasses": false,
+      "hasUnitCoverage": false,
+      "unitReportUrl": null,
+      "hasRuntimeCoverage": true,
+      "runtimeReportUrl": "/reports/service-b/2.0.0/runtime/",
+      "hasFullCoverage": false,
+      "fullReportUrl": null,
+      "lastUpdated": "2026-03-09T12:45:00Z"
+    }
+  ]
+}

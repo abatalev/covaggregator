@@ -1,0 +1,36 @@
+# Локальный конфиг для запуска с example/things
+# Используется целью make start-example
+
+services:
+  - id: things-service
+    name: "Things Service"
+    # Шаблон URL для загрузки исходников (опционально)
+    sources_url_pattern: "http://repo.example.com/things/{{service}}/{{version}}/sources.jar"
+    versions:
+      - version: "0.0.1"
+        # Пути к исходникам и class-файлам для этой версии
+        source_path: example/things/build/service/src/main/java
+        class_path: example/things/build/service/target/classes
+    # Инстансы (версия может быть указана явно или определена автоматически)
+    instances:
+      - host: localhost
+        port: 6300
+        version: "0.0.1"   # если не указана – будет определена через /version эндпоинт
+
+    poll_interval: 60s
+    version_detection:
+      enabled: false
+      endpoint: "/version"   # HTTP‑путь, возвращающий версию в plain text
+      timeout: 5s
+
+  - id: things-stub
+    name: "Things Stub"
+    versions:
+      - version: "0.0.1"
+        source_path: example/things/build/stub/src/main/java
+        class_path: example/things/build/stub/target/classes
+    instances:
+      - host: localhost
+        port: 6301
+        version: "0.0.1"
+    poll_interval: 30s

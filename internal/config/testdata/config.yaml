@@ -1,0 +1,31 @@
+services:
+  - id: service-a
+    name: "Service A"
+    versions:
+      - version: "1.0.0"
+        source_path: /sources/service-a/1.0.0
+        class_path: /classes/service-a/1.0.0
+      - version: "1.1.0"
+        source_path: /sources/service-a/1.1.0
+        class_path: /classes/service-a/1.1.0
+    instances:
+      - host: 10.0.0.1
+        port: 6300
+        version: "1.0.0"
+      - host: 10.0.0.2
+        port: 6300
+    poll_interval: 60s
+    version_detection:
+      enabled: true
+      endpoint: "/version"
+      timeout: 5s
+  - id: service-b
+    name: "Service B"
+    versions:
+      - version: "2.1.0"
+        source_path: /sources/service-b/2.1.0
+        class_path: /classes/service-b/2.1.0
+    instances:
+      - host: 10.0.0.3
+        port: 6300
+    poll_interval: 30s

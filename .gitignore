@@ -1,0 +1,19 @@
+# Исключаем каталог example (внешний репозиторий)
+/example/
+internal/publisher/frontend/assets/
+
+# Бинарные файлы
+bin/
+coverage.out
+
+# Файлы IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Логи и временные файлы
+*.log
+tmp/
+data/
+tools/
